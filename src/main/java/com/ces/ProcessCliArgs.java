@@ -11,10 +11,16 @@ import org.apache.commons.cli.MissingArgumentException;
 import org.apache.commons.cli.MissingOptionException;
 import org.apache.commons.cli.ParseException;
 
+import java.io.File;
+
+import org.apache.commons.io.FilenameUtils;
+
 public class ProcessCliArgs {
 
-    public void run(String[] args) {
+    public String run(String[] args) {
         CommandLine commandLine = parseArguments(args);
+
+        return commandLine.getOptionValue("file");
     }
 
     private CommandLine parseArguments(String[] args) {
@@ -29,6 +35,21 @@ public class ProcessCliArgs {
                 cliHelp();
 
                 System.exit(0);
+            } else if (commandLine.hasOption("file")) {
+                try {
+                    String filePath = commandLine.getOptionValue("file");
+                    String fileExtension = FilenameUtils.getExtension(filePath);
+                    File file = new File(filePath);
+                    if (file.isDirectory() || !fileExtension.equals("csv")) {
+                        System.err.println("Please input a single file with .csv extension.");
+
+                        System.exit(1);
+                    }
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+
+                    System.exit(1);
+                }
             }
         } catch (MissingOptionException | MissingArgumentException e) {
             System.err.println(e.getMessage());
