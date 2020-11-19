@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option java_package = "com.ces.Product.Proto";
+option java_outer_classname = "ProductProto";
+
+/**
+* Product proto object
+*/
+message Product {
+  int32 productID = 1;
+  string catalog = 2;
+  string stockcode = 3;
+  string productDescription = 4;
+}
+
+message Products {
+  repeated Product products = 1;
+}

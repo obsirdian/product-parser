@@ -37,6 +37,21 @@
             <artifactId>maven-assembly-plugin</artifactId>
             <version>3.2.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>3.14.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java-util</artifactId>
+            <version>3.14.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.os72</groupId>
+            <artifactId>protoc-jar-maven-plugin</artifactId>
+            <version>3.11.4</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -47,7 +62,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.ces.ProductParser</mainClass>
+                            <mainClass>com.ces.Product.Proto.ProductParser</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -58,7 +73,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.ces.ProductParser</mainClass>
+                            <mainClass>com.ces.Product.Proto.ProductParser</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -72,6 +87,23 @@
                         <goals>
                             <goal>single</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.github.os72</groupId>
+                <artifactId>protoc-jar-maven-plugin</artifactId>
+                <version>3.11.4</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <addProtoSources>all</addProtoSources>
+                            <includeMavenTypes>direct</includeMavenTypes>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
