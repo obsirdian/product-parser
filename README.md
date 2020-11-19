@@ -18,7 +18,7 @@ A java utility to parse product csv files into protobuf objects and output to JS
 ### Build
 These commands can be run from the cli, or the integrated IntelliJ maven plugin.
 * `mvn compile` To generate the required protobuf classes
-* `mvn install` * will generate the following jar files in `<project-root>/target/`
+* `mvn install` will generate the following jar files in `<project-root>/target/`
   * `product-parser-[VERSION].jar`
   * `product-parser-[VERSION]-jar-with-dependencies.jar`
 
