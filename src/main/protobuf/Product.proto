@@ -13,6 +13,10 @@ message Product {
   string productDescription = 4;
 }
 
+/*
+ * Products proto object to hold
+ * multiple product objects
+*/
 message Products {
   repeated Product products = 1;
 }

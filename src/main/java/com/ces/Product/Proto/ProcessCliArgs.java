@@ -15,15 +15,28 @@ import java.io.File;
 
 import org.apache.commons.io.FilenameUtils;
 
+/**
+ * Class to process cli options
+ * and check for required arguments
+ */
 public class ProcessCliArgs {
 
+    /**
+     * @param args String command line arguments
+     * @return String full validated path to file
+     */
     public String run(String[] args) {
         CommandLine commandLine = parseArguments(args);
 
         return commandLine.getOptionValue("file");
     }
 
+    /**
+     * @param args String command line arguments
+     * @return CommandLine object
+     */
     private CommandLine parseArguments(String[] args) {
+        // parse arguments
         CommandLineParser commandLineParser = new DefaultParser();
         CommandLine commandLine = null;
         Options options = cliOptions();
@@ -31,11 +44,13 @@ public class ProcessCliArgs {
         try {
             commandLine = commandLineParser.parse(options, args);
 
+            // ouput help and version
             if (commandLine.hasOption("help") || commandLine.hasOption("version")) {
                 cliHelp();
 
                 System.exit(0);
             } else if (commandLine.hasOption("file")) {
+                // check for valid file
                 try {
                     String filePath = commandLine.getOptionValue("file");
                     String fileExtension = FilenameUtils.getExtension(filePath);
@@ -67,6 +82,11 @@ public class ProcessCliArgs {
         return commandLine;
     }
 
+    /**
+     * configure accepted arguments
+     *
+     * @return Options
+     */
     private Options cliOptions() {
         Options options = new Options();
         OptionGroup optionGroup = new OptionGroup();
@@ -92,12 +112,16 @@ public class ProcessCliArgs {
                         .build()
         );
 
+        // group is required, so at least one of the options must be used
         optionGroup.setRequired(true);
         options.addOptionGroup(optionGroup);
 
         return options;
     }
 
+    /**
+     * Generate cli help text
+     */
     private void cliHelp() {
         Options options = cliOptions();
         HelpFormatter helpFormatter = new HelpFormatter();
